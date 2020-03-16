@@ -10,8 +10,8 @@ public class InputHandler : MonoBehaviour
     public Text timeValue;
     public Text scoreValue;
     float score;
-    float[] timingLow = { 2.1f , 2.6f};
-    float[] timingHigh = { 2.5f, 3.0f };
+    public float[] timing = {0};
+    float interval = 0.2f;
     int index = 0;
     bool clicked = false;
 
@@ -25,26 +25,37 @@ public class InputHandler : MonoBehaviour
     void Update()
     {
         time += Time.deltaTime;
-        Debug.Log(clicked);
-        if ((index < timingLow.Length) &&(time <= timingHigh[index])&&( time >= timingLow[index])&&(clicked == false))
+
+        //Timing où le joueur doit appuyer
+        if ((index < timing.Length) &&(time <= timing[index]+interval)&&( time >= timing[index]-interval)&&(clicked == false))
         {
+            //S'il appuie, il gagne des points
             if (Input.anyKeyDown&&!clicked)
             {
                 score++;
-                index++;
                 clicked = true;
             }
         }
 
-        if ((index < timingLow.Length)&&(time > timingHigh[index])&&!clicked)
+        //Lorsque le timing est passé, on augmente l'index pour passer au prochain timing
+        if ((index < timing.Length)&&(time > timing[index]+interval)&&(!clicked))
         {
             index++;
-        } else if ((index < timingLow.Length)&&(time > timingHigh[index])&&clicked)
+        } else if ((index < timing.Length)&&(time > timing[index]+interval)&&(clicked))
         {
             clicked = false;
+            index++;
         }
-        timeValue.text = (Mathf.Round(time*100)/100).ToString();
-        scoreValue.text = score.ToString();
+
         
+        displayValue();
+        
+    }
+
+    //Affichage du score et du temps
+    public void displayValue()
+    {
+        timeValue.text = (Mathf.Round(time * 100) / 100).ToString();
+        scoreValue.text = score.ToString();
     }
 }
