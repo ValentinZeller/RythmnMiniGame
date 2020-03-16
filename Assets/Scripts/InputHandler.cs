@@ -11,9 +11,13 @@ public class InputHandler : MonoBehaviour
     public Text scoreValue;
     float score;
     public float[] timing = {0};
-    float interval = 0.2f;
+    float interval = 0.4f;
+    float intervalLong = 3.2f;
     int index = 0;
     bool clicked = false;
+
+    int indexLong = 29;
+    int indexLong2 = 83; 
 
     // Start is called before the first frame update
     void Start()
@@ -26,11 +30,18 @@ public class InputHandler : MonoBehaviour
     {
         time += Time.deltaTime;
 
+        //Timing où le joueur doit mainteir appuyer
+        if ((index < timing.Length) && (time <= timing[index] + intervalLong) && (time >= timing[index] - interval) && ((index == indexLong)||(index == indexLong2))) {
+            if (Input.anyKey)
+            {
+                score++;
+            }
+        }
         //Timing où le joueur doit appuyer
-        if ((index < timing.Length) &&(time <= timing[index]+interval)&&( time >= timing[index]-interval)&&(clicked == false))
+        else if ((index < timing.Length) && (time <= timing[index] + interval) && (time >= timing[index] - 0.2) && !clicked)
         {
             //S'il appuie, il gagne des points
-            if (Input.anyKeyDown&&!clicked)
+            if (Input.anyKeyDown && !clicked)
             {
                 score++;
                 clicked = true;
@@ -46,6 +57,7 @@ public class InputHandler : MonoBehaviour
             clicked = false;
             index++;
         }
+
 
         
         displayValue();
