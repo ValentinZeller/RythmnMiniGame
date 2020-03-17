@@ -29,37 +29,7 @@ public class InputHandler : MonoBehaviour
     void Update()
     {
         time += Time.deltaTime;
-
-        //Timing où le joueur doit mainteir appuyer
-        if ((index < timing.Length) && (time <= timing[index] + intervalLong) && (time >= timing[index] - interval) && ((index == indexLong)||(index == indexLong2))) {
-            if (Input.anyKey)
-            {
-                score++;
-            }
-        }
-        //Timing où le joueur doit appuyer
-        else if ((index < timing.Length) && (time <= timing[index] + interval) && (time >= timing[index] - 0.2) && !clicked)
-        {
-            //S'il appuie, il gagne des points
-            if (Input.anyKeyDown && !clicked)
-            {
-                score++;
-                clicked = true;
-            }
-        }
-
-        //Lorsque le timing est passé, on augmente l'index pour passer au prochain timing
-        if ((index < timing.Length)&&(time > timing[index]+interval)&&(!clicked))
-        {
-            index++;
-        } else if ((index < timing.Length)&&(time > timing[index]+interval)&&(clicked))
-        {
-            clicked = false;
-            index++;
-        }
-
-
-        
+        clickTiming();
         displayValue();
         
     }
@@ -70,4 +40,38 @@ public class InputHandler : MonoBehaviour
         timeValue.text = (Mathf.Round(time * 100) / 100).ToString();
         scoreValue.text = score.ToString();
     }
+
+    public void clickTiming()
+    {
+        //Timing où le joueur doit mainteir appuyer
+        if ((index < timing.Length) && (time <= timing[index] + intervalLong) && (time >= timing[index] - interval) && ((index == indexLong) || (index == indexLong2)))
+        {
+            if (Input.anyKey)
+            {
+                score++;
+            }
+        }
+        //Timing où le joueur doit appuyer
+        else if ((index < timing.Length) && (time <= timing[index] + interval) && (time >= timing[index]) && !clicked)
+        {
+            //S'il appuie, il gagne des points
+            if (Input.anyKeyDown && !clicked)
+            {
+                score++;
+                clicked = true;
+            }
+        }
+
+        //Lorsque le timing est passé, on augmente l'index pour passer au prochain timing
+        if ((index < timing.Length) && (time > timing[index] + interval) && (!clicked))
+        {
+            index++;
+        }
+        else if ((index < timing.Length) && (time > timing[index] + interval) && (clicked))
+        {
+            clicked = false;
+            index++;
+        }
+    }
+    
 }
