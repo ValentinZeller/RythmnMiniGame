@@ -10,14 +10,26 @@ public class InputHandler : MonoBehaviour
     public Text timeValue;
     public Text scoreValue;
     float score;
-    public float[] timing = {0};
+    float[] timing = new float[83];
     float interval = 0.4f;
     float intervalLong = 3.2f;
     int index = 0;
-    bool clicked = false;
+    float start = 2.1f;
+    [HideInInspector]public bool clicked = false;
+
+    public GameManager gameManager;
 
     int indexLong = 29;
-    int indexLong2 = 83; 
+    int indexLong2 = 83;
+
+    private void Awake()
+    {
+        for (int i = 0; i < indexLong2; i++)
+        {
+            timing[i] = start * (interval * i);
+        }
+    }
+
 
     // Start is called before the first frame update
     void Start()
@@ -26,6 +38,8 @@ public class InputHandler : MonoBehaviour
     }
 
     // Update is called once per frame
+
+
     void Update()
     {
         time += Time.deltaTime;
@@ -41,10 +55,13 @@ public class InputHandler : MonoBehaviour
         scoreValue.text = score.ToString();
     }
 
+
     public void clickTiming()
     {
+
+        
         //Timing où le joueur doit mainteir appuyer
-        if ((index < timing.Length) && (time <= timing[index] + intervalLong) && (time >= timing[index] - interval) && ((index == indexLong) || (index == indexLong2)))
+        /*if ((index < timing.Length) && (time <= timing[index] + intervalLong) && (time >= timing[index] - interval) && ((index == indexLong) || (index == indexLong2)))
         {
             if (Input.anyKey)
             {
@@ -52,7 +69,7 @@ public class InputHandler : MonoBehaviour
             }
         }
         //Timing où le joueur doit appuyer
-        else if ((index < timing.Length) && (time <= timing[index] + interval) && (time >= timing[index]) && !clicked)
+        else*/ if (gameManager.tMoutons[3].GetComponent<SpriteRenderer>().color == Color.black && !clicked)
         {
             //S'il appuie, il gagne des points
             if (Input.anyKeyDown && !clicked)
@@ -72,6 +89,12 @@ public class InputHandler : MonoBehaviour
             clicked = false;
             index++;
         }
+
+        if (gameManager.tMoutons[3].GetComponent<SpriteRenderer>().color == Color.white)
+        {
+            clicked = false;
+        }
+        
     }
-    
+
 }

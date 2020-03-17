@@ -8,16 +8,23 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     public GameObject[] tMoutons;
     public GameObject echecMouton;
+    public InputHandler input;
+    float start = 1.2f;
 
     // Start is called before the first frame update
     void Start()
     {
-        InvokeRepeating("MoutMoutMout", 2.0f, 2f);
-        InvokeRepeating("MoutMout", 2.0f, 0.5f);
+
+        InvokeRepeating("MoutMoutMout", start, 0.8f);
+        InvokeRepeating("MoutMout", start, 0.2f);
     }
 
    void MoutMout()
    {
+        if (echecMouton.GetComponent<SpriteRenderer>().color == Color.black)
+        {
+            echecMouton.GetComponent<SpriteRenderer>().color = Color.white;
+        }
         if (tMoutons[NbMoutons - 1].GetComponent<SpriteRenderer>().color == Color.black)
         {
             tMoutons[NbMoutons - 1].GetComponent<SpriteRenderer>().color = Color.white;
@@ -28,7 +35,14 @@ public class GameManager : MonoBehaviour
             if (tMoutons[nI - 1].GetComponent<SpriteRenderer>().color == Color.black)
             {
                 tMoutons[nI - 1].GetComponent<SpriteRenderer>().color = Color.white;
-                tMoutons[nI].GetComponent<SpriteRenderer>().color = Color.green;
+                if ((nI == 4)&&(!input.clicked))
+                {
+                    echecMouton.GetComponent<SpriteRenderer>().color = Color.green;
+                } else
+                {
+                    tMoutons[nI].GetComponent<SpriteRenderer>().color = Color.green;
+                    
+                }
             }
         }
 
@@ -38,6 +52,10 @@ public class GameManager : MonoBehaviour
             {
                 tMoutons[nI].GetComponent<SpriteRenderer>().color = Color.black;
             }
+        }
+        if (echecMouton.GetComponent<SpriteRenderer>().color == Color.green)
+        {
+            echecMouton.GetComponent<SpriteRenderer>().color = Color.black;
         }
     }
 
