@@ -423,12 +423,12 @@ PrefabInstance:
     - target: {fileID: 177200475221016808, guid: 140bc7a5c5516034fa11721e712c3da5,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.72
+      value: 2.78
       objectReference: {fileID: 0}
     - target: {fileID: 177200475221016808, guid: 140bc7a5c5516034fa11721e712c3da5,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.5
+      value: -3.32
       objectReference: {fileID: 0}
     - target: {fileID: 177200475221016808, guid: 140bc7a5c5516034fa11721e712c3da5,
         type: 3}
@@ -474,6 +474,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 177200475221016808, guid: 140bc7a5c5516034fa11721e712c3da5,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.65
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 140bc7a5c5516034fa11721e712c3da5, type: 3}
@@ -1574,6 +1579,7 @@ MonoBehaviour:
   - {fileID: 571782639}
   echecMouton: {fileID: 784672744}
   input: {fileID: 1635475519}
+  TabMouton: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
 --- !u!4 &1691442685
 Transform:
   m_ObjectHideFlags: 0
@@ -1582,7 +1588,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1691442683}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.5432558, y: -0.7230494, z: -357.93}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

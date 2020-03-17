@@ -5,62 +5,82 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static int NbMoutons = 10;
-    [SerializeField]
     public GameObject[] tMoutons;
     public GameObject echecMouton;
     public InputHandler input;
-    float start = 1.2f;
+    float start = 0.0f;
+    public int[] TabMouton;
 
     // Start is called before the first frame update
     void Start()
     {
-
-        InvokeRepeating("MoutMoutMout", start, 0.8f);
-        InvokeRepeating("MoutMout", start, 0.2f);
+        //InvokeRepeating("AfficheMouton", start, 0.5f); L'afficheMouton a été déplacé dans l'incrementtableaumouton
+        InvokeRepeating("IncrementTableauMouton", start, 0.5f);
+        InvokeRepeating("InitMouton", start, 2.0f);
     }
 
-   public void MoutMout()
-   {
+    public void IncrementTableauMouton()
+    //BUT : Gérer le tableau des moutons.
+    //ENTREE : Le tableau à incrémenter.
+    //SORTIE : Le tableau incrémenté.
+    {
         if (echecMouton.GetComponent<SpriteRenderer>().color == Color.black)
         {
             echecMouton.GetComponent<SpriteRenderer>().color = Color.white;
         }
-        if (tMoutons[NbMoutons - 1].GetComponent<SpriteRenderer>().color == Color.black)
-        {
-            tMoutons[NbMoutons - 1].GetComponent<SpriteRenderer>().color = Color.white;
-        }
 
-        for (int nI=1; nI< NbMoutons; nI++)
+        for (int nI = 1; nI < NbMoutons; nI++)
         {
-            if (tMoutons[nI - 1].GetComponent<SpriteRenderer>().color == Color.black)
+            if (TabMouton[nI-1]==1)
             {
-                tMoutons[nI - 1].GetComponent<SpriteRenderer>().color = Color.white;
-                if ((nI == 4)&&(!input.clicked))
+                TabMouton[nI-1] = 0;
+                if ((nI == 4) && (!input.clicked))
                 {
-                    echecMouton.GetComponent<SpriteRenderer>().color = Color.green;
-                } else
+                    echecMouton.GetComponent<SpriteRenderer>().color = Color.black;
+                }
+                else
                 {
-                    tMoutons[nI].GetComponent<SpriteRenderer>().color = Color.green;
-                    
+                    TabMouton[nI] = 2; //2 est une valeur temporaire pour ne pas pousser au bout du tableau la valeur.
                 }
             }
         }
 
         for (int nI = 0; nI < NbMoutons; nI++)
         {
-            if (tMoutons[nI].GetComponent<SpriteRenderer>().color == Color.green)
+            if (TabMouton[nI]==2)
+            {
+                TabMouton[nI] = 1;
+            }
+        }
+
+        AfficheMouton();
+
+        TabMouton[NbMoutons - 1] = 0;
+    }
+
+    public void AfficheMouton()
+    //BUT : Gérer l'affichage des moutons.
+    //ENTREE : Le tableau des moutons et le tableau d'incrémentation.
+    //SORTIE : L'affichage des moutons actualisé.
+    {
+        for (int nI = 0; nI < NbMoutons; nI++)
+        {
+            if (TabMouton[nI] == 1)
             {
                 tMoutons[nI].GetComponent<SpriteRenderer>().color = Color.black;
             }
-        }
-        if (echecMouton.GetComponent<SpriteRenderer>().color == Color.green)
-        {
-            echecMouton.GetComponent<SpriteRenderer>().color = Color.black;
+            else
+            {
+                tMoutons[nI].GetComponent<SpriteRenderer>().color = Color.white;
+            }
         }
     }
 
-    public void MoutMoutMout()
+    public void InitMouton()
+    //BUT : Meilleure fonction du monde.
+    //ENTREE : Une seule ligne mais elle est appelée 4 tic avant l'impact demandé au joueur.
+    //SORTIE : Ca colore les moutons en noir.
     {
-        tMoutons[0].GetComponent<SpriteRenderer>().color = Color.green;
+        TabMouton[0] = 2;
     }
 }
