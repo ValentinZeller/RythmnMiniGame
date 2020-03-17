@@ -17,16 +17,14 @@ public class InputHandler : MonoBehaviour
     float start = 2.1f;
     [HideInInspector]public bool clicked = false;
 
-    public GameManager gameManager;
-
     int indexLong = 29;
     int indexLong2 = 83;
 
     private void Awake()
     {
-        for (int i = 0; i < indexLong2; i++)
+        for (int i = 0; i < 83; i++)
         {
-            timing[i] = start * (interval * i);
+            timing[i] = start + (i * interval);
         }
     }
 
@@ -43,6 +41,7 @@ public class InputHandler : MonoBehaviour
     void Update()
     {
         time += Time.deltaTime;
+        if (time > timing[index] - interval*1.5)
         clickTiming();
         displayValue();
         
@@ -59,7 +58,7 @@ public class InputHandler : MonoBehaviour
     public void clickTiming()
     {
 
-        
+
         //Timing où le joueur doit mainteir appuyer
         /*if ((index < timing.Length) && (time <= timing[index] + intervalLong) && (time >= timing[index] - interval) && ((index == indexLong) || (index == indexLong2)))
         {
@@ -69,7 +68,8 @@ public class InputHandler : MonoBehaviour
             }
         }
         //Timing où le joueur doit appuyer
-        else*/ if (gameManager.tMoutons[3].GetComponent<SpriteRenderer>().color == Color.black && !clicked)
+        else*/
+        if ((GameObject.Find("GameManager").GetComponent<GameManager>().tMoutons[3].GetComponent<SpriteRenderer>().color == Color.black) && (!clicked))
         {
             //S'il appuie, il gagne des points
             if (Input.anyKeyDown && !clicked)
@@ -89,12 +89,12 @@ public class InputHandler : MonoBehaviour
             clicked = false;
             index++;
         }
-
-        if (gameManager.tMoutons[3].GetComponent<SpriteRenderer>().color == Color.white)
+        if ((GameObject.Find("GameManager").GetComponent<GameManager>().tMoutons[3].GetComponent<SpriteRenderer>().color == Color.white))
         {
             clicked = false;
         }
-        
+
+
     }
 
 }

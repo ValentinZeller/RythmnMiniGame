@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
         InvokeRepeating("MoutMout", start, 0.2f);
     }
 
-   void MoutMout()
+   public void MoutMout()
    {
         if (echecMouton.GetComponent<SpriteRenderer>().color == Color.black)
         {
@@ -59,7 +59,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void MoutMoutMout()
+    public void MoutMoutMout()
     {
         tMoutons[0].GetComponent<SpriteRenderer>().color = Color.green;
     }
