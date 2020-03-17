@@ -80,15 +80,7 @@ public class InputHandler : MonoBehaviour
         }
 
         //Lorsque le timing est passé, on augmente l'index pour passer au prochain timing
-        if ((index < timing.Length) && (time > timing[index] + interval) && (!clicked))
-        {
-            index++;
-        }
-        else if ((index < timing.Length) && (time > timing[index] + interval) && (clicked))
-        {
-            clicked = false;
-            index++;
-        }
+
         if ((GameObject.Find("GameManager").GetComponent<GameManager>().tMoutons[3].GetComponent<SpriteRenderer>().color == Color.white))
         {
             clicked = false;
