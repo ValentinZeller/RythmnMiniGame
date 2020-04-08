@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     public int[] TabMouton;
     float timer = 0.0f;
     public Text timeValue;
+    private float fTempo = 0.45f;
 
     // Start is called before the first frame update
     void Start()
@@ -21,7 +22,28 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        displayValueTimer();   
+        displayValueTimer();
+        switch (timer)
+        {
+            case float fX when (fX >= 2.1f && fX<3.8f):
+                InvokeMouton();
+                break;
+            case float fX when (fX >= 3.8 && fX < 5.7):
+                RevokeMouton();
+                break;
+            case float fX when (fX >= 5.8f && fX < 7.6f):
+                if (!IsInvoking("InitMouton"))
+                {
+                    InvokeRepeating("InitMouton", start, fTempo);
+                }
+                break;
+            //case float fX when (fX >= 7.6f && fX <12.8f)
+
+
+
+            /*case default:
+                break;*/
+        }
     }
 
     private void FixedUpdate()
@@ -30,6 +52,9 @@ public class GameManager : MonoBehaviour
     }
 
     public void displayValueTimer()
+    //BUT : Afficher la valeur du timer
+    //ENTREE : La valeur du timer.
+    //SORTIE : Le timer affiché.
     {
         float fTemps = timer;
         int nDizaine =(int) Mathf.Floor(fTemps / 10);
@@ -107,5 +132,21 @@ public class GameManager : MonoBehaviour
     //SORTIE : Ca colore les moutons en noir.
     {
         TabMouton[0] = 2;
+    }
+
+    public void InvokeMouton()
+    {
+        if (!IsInvoking("InitMouton"))
+        {
+            InvokeRepeating("InitMouton", start, fTempo);
+        }
+    }
+
+    public void RevokeMouton()
+    {
+        if (IsInvoking("InitMouton"))
+        {
+            CancelInvoke("InitMouton");
+        }
     }
 }
