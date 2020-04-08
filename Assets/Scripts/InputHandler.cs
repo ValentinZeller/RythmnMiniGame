@@ -4,18 +4,34 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class InputHandler : MonoBehaviour
+<<<<<<< HEAD
 {   
     float time = 0;
     public Text timeValue;
+=======
+{
+    //float time = 0;
+>>>>>>> SCHLOTTER_Romain_unity_2019
     public Text scoreValue;
     public Image pressButton;
     float score;
     float[] timing = new float[83];
     float interval = 0.4f;
+<<<<<<< HEAD
     int index = 0;
     float start = 2.1f;
     [HideInInspector]public bool clicked = false;
 
+=======
+    //float intervalLong = 3.2f;
+    //int index = 0;
+    float start = 2.1f;
+    [HideInInspector]public bool clicked = false;
+
+    //int indexLong = 29;
+    //int indexLong2 = 83;
+
+>>>>>>> SCHLOTTER_Romain_unity_2019
     private void Awake()
     {
         /*for (int i = 0; i < 83; i++)
@@ -35,18 +51,22 @@ public class InputHandler : MonoBehaviour
 
     void Update()
     {
+<<<<<<< HEAD
         time += Time.deltaTime;
         //if (time > timing[index] - interval*1.5)
         pressedButton();
+=======
+        //if (time > timing[index] - interval*1.5)
+>>>>>>> SCHLOTTER_Romain_unity_2019
         clickTiming();
-        displayValue();
+        displayValueScore();
         
     }
 
-    //Affichage du score et du temps
-    public void displayValue()
+
+    //Affichage du score
+    public void displayValueScore()
     {
-        timeValue.text = (Mathf.Round(time * 100) / 100).ToString();
         scoreValue.text = score.ToString();
     }
 
