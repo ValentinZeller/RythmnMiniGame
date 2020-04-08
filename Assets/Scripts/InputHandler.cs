@@ -52,13 +52,13 @@ public class InputHandler : MonoBehaviour
 
     void pressedButton()
     {
-        if (Input.anyKeyDown)
+        if (Input.anyKeyDown || Input.anyKey)
         {
             pressButton.color = new Color32(231, 97, 97, 255);
         }
         else
         {
-            pressButton.color = new Color32(147, 60, 60, 255);
+            pressButton.color = new Color32(0, 0, 0, 255);
         }
     }
 
