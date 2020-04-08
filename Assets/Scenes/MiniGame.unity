@@ -1441,7 +1441,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82bdcc11ccec7ff419593b49b1ccc352, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeValue: {fileID: 1871362701}
   scoreValue: {fileID: 1685428586}
   clicked: 0
 --- !u!4 &1635475520
@@ -1580,6 +1579,7 @@ MonoBehaviour:
   echecMouton: {fileID: 784672744}
   input: {fileID: 1635475519}
   TabMouton: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
+  timeValue: {fileID: 1871362701}
 --- !u!4 &1691442685
 Transform:
   m_ObjectHideFlags: 0

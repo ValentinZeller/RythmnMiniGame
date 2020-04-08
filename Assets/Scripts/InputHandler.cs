@@ -5,20 +5,18 @@ using UnityEngine.UI;
 
 public class InputHandler : MonoBehaviour
 {
-    
-    float time = 0;
-    public Text timeValue;
+    //float time = 0;
     public Text scoreValue;
     float score;
     float[] timing = new float[83];
     float interval = 0.4f;
-    float intervalLong = 3.2f;
-    int index = 0;
+    //float intervalLong = 3.2f;
+    //int index = 0;
     float start = 2.1f;
     [HideInInspector]public bool clicked = false;
 
-    int indexLong = 29;
-    int indexLong2 = 83;
+    //int indexLong = 29;
+    //int indexLong2 = 83;
 
     private void Awake()
     {
@@ -40,17 +38,16 @@ public class InputHandler : MonoBehaviour
 
     void Update()
     {
-        time += Time.deltaTime;
-        if (time > timing[index] - interval*1.5)
+        //if (time > timing[index] - interval*1.5)
         clickTiming();
-        displayValue();
+        displayValueScore();
         
     }
 
-    //Affichage du score et du temps
-    public void displayValue()
+
+    //Affichage du score
+    public void displayValueScore()
     {
-        timeValue.text = (Mathf.Round(time * 100) / 100).ToString();
         scoreValue.text = score.ToString();
     }
 

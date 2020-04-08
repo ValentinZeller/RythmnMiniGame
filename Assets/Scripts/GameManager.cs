@@ -1,6 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -10,13 +9,39 @@ public class GameManager : MonoBehaviour
     public InputHandler input;
     float start = 0.0f;
     public int[] TabMouton;
+    float timer = 0.0f;
+    public Text timeValue;
 
     // Start is called before the first frame update
     void Start()
     {
-        //InvokeRepeating("AfficheMouton", start, 0.5f); L'afficheMouton a été déplacé dans l'incrementtableaumouton
-        InvokeRepeating("IncrementTableauMouton", start, 0.5f);
+        InvokeRepeating("IncrementTableauMouton", start, 0.2f);
         InvokeRepeating("InitMouton", start, 2.0f);
+    }
+
+    void Update()
+    {
+        displayValueTimer();   
+    }
+
+    private void FixedUpdate()
+    {
+        timer += Time.deltaTime;
+    }
+
+    public void displayValueTimer()
+    {
+        float fTemps = timer;
+        int nDizaine =(int) Mathf.Floor(fTemps / 10);
+        fTemps -= nDizaine*10;
+        int nUnite = (int)Mathf.Floor(fTemps);
+        fTemps -= nUnite;
+        int nDizieme = (int)Mathf.Floor(fTemps * 10);
+        string sResultat = nDizaine.ToString();
+        sResultat += nUnite.ToString();
+        sResultat += ",";
+        sResultat += nDizieme.ToString();
+        timeValue.text = sResultat;
     }
 
     public void IncrementTableauMouton()
