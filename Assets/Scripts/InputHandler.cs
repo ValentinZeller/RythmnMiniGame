@@ -4,30 +4,25 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class InputHandler : MonoBehaviour
-{
-    
+{   
     float time = 0;
     public Text timeValue;
     public Text scoreValue;
+    public Image pressButton;
     float score;
     float[] timing = new float[83];
     float interval = 0.4f;
-    float intervalLong = 3.2f;
     int index = 0;
     float start = 2.1f;
     [HideInInspector]public bool clicked = false;
 
-    int indexLong = 29;
-    int indexLong2 = 83;
-
     private void Awake()
     {
-        for (int i = 0; i < 83; i++)
+        /*for (int i = 0; i < 83; i++)
         {
             timing[i] = start + (i * interval);
-        }
+        }*/
     }
-
 
     // Start is called before the first frame update
     void Start()
@@ -41,7 +36,8 @@ public class InputHandler : MonoBehaviour
     void Update()
     {
         time += Time.deltaTime;
-        if (time > timing[index] - interval*1.5)
+        //if (time > timing[index] - interval*1.5)
+        pressedButton();
         clickTiming();
         displayValue();
         
@@ -54,11 +50,21 @@ public class InputHandler : MonoBehaviour
         scoreValue.text = score.ToString();
     }
 
+    void pressedButton()
+    {
+        if (Input.anyKeyDown || Input.anyKey)
+        {
+            pressButton.color = new Color32(231, 97, 97, 255);
+        }
+        else
+        {
+            pressButton.color = new Color32(0, 0, 0, 255);
+        }
+    }
 
     public void clickTiming()
     {
-
-
+       
         //Timing où le joueur doit mainteir appuyer
         /*if ((index < timing.Length) && (time <= timing[index] + intervalLong) && (time >= timing[index] - interval) && ((index == indexLong) || (index == indexLong2)))
         {
