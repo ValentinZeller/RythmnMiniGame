@@ -4,15 +4,16 @@ using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour
 {
-    public static int NbMoutons = 10;
-    public GameObject[] tMoutons;
-    public GameObject echecMouton;
-    public InputHandler input;
-    float start = 0.0f;
-    public int[] TabMouton;
-    float timer = 0.0f;
-    public Text timeValue;
-    private float fTempo = 0.45f;
+    private static int NbMoutons = 10; //Il y a 10 emplacements de moutons dans la scène.
+    public GameObject[] tMoutons; //Tableau pour récupérer.
+    public GameObject echecMouton; //Le mouton hors du tableau car il ne fait pas partie du chemin de base, qui se colore en cas d'échec.
+    public InputHandler input; //La variable stockant l'input du joueur.
+    float start = 0.0f; //Le temps avant le début d'une salve.
+    public int[] TabMouton; //Le tableau qui permet de mettre à jour les couleurs des moutons. 
+    float timer = 0.0f; //La variable qui va stocker le timer du jeu.
+    public Text timeValue; //Le texte qu'on mettra à jour pour afficher le timer au joueur.
+    private float fTempo = 0.8f; //Le tempo du jeu, il a été multiplié par deux, réduisant de moitié le nombre de moutons pour devenir plus jouable.
+    private int nDistanceMouton = 3; //La distance entre deux moutons pour gérer l'affichage sans tuer les épileptiques.
 
     struct salve
     {
@@ -25,37 +26,38 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        InvokeRepeating("IncrementTableauMouton", start, fTempo/2);
-        //InvokeRepeating("InitMouton", start, 2.0f);
+        InvokeRepeating("IncrementTableauMouton", start, fTempo/nDistanceMouton);
         MappingNiveau1();
-
     }
 
     void Update()
     {
         displayValueTimer();
-        if (Timing.Count != 0)
-        {
-            if (timer >= (Timing[0].fDebut-4 * (fTempo/2)))
-            {
-                InvokeMouton();
-            }
-            if(timer >= (Timing[0].fFin - 4 * (fTempo / 2)))
-            {
-                RevokeMouton();
-                Timing.Remove(Timing[0]);
-            }
-        }
-        else
-        {
-            Debug.Log("La Liste est vide.");
-        }
-        
+        TimingMouton();
     }
 
     private void FixedUpdate()
     {
         timer += Time.deltaTime;
+    }
+
+    private void TimingMouton()
+    //BUT : Gérer la génération de moutons en fonction du Timing.
+    //ENTREE : Une liste nommée Timing de salves de moutons, qui contiennent le début et la fin de la salve.
+    //SORTIE : L'apparition régulière de moutons selon la liste Timing.
+    {
+        if (Timing.Count != 0)
+        {
+            if (timer >= (Timing[0].fDebut - 4 * (fTempo / nDistanceMouton)))
+            {
+                InvokeMouton();
+            }
+            if (timer >= (Timing[0].fFin - 4 * (fTempo / nDistanceMouton)))
+            {
+                RevokeMouton();
+                Timing.Remove(Timing[0]);
+            }
+        }
     }
 
     public void displayValueTimer()
@@ -142,6 +144,9 @@ public class GameManager : MonoBehaviour
     }
 
     public void InvokeMouton()
+    //BUT : Invoquer des moutons au début de leur chemin.
+    //ENTREE : Le temps avant l'invocation du mouton et le délai entre deux invocations.
+    //SORTIE : Un mouton qui apparait à chaque fois que le délai est atteint.
     {
         if (!IsInvoking("InitMouton"))
         {
@@ -150,6 +155,9 @@ public class GameManager : MonoBehaviour
     }
 
     public void RevokeMouton()
+    //BUT : Arrêter l'invocation de moutons.
+    //ENTREE : Arrête tout invocation de mouton à l'appel.
+    //SORTIE : L'invocation est arrêtée.
     {
         if (IsInvoking("InitMouton"))
         {
@@ -158,6 +166,9 @@ public class GameManager : MonoBehaviour
     }
 
     void MappingNiveau1()
+    //BUT : Remplir la liste Timing avec les salves de moutons.
+    //ENTREE : La liste et les salves.
+    //SORTIE : La liste complète.
     {
         Timing.Add(CreateSalve(2.1f, 4.0f));
         Timing.Add(CreateSalve(5.8f, 7.8f));
@@ -177,6 +188,9 @@ public class GameManager : MonoBehaviour
     }
 
     salve CreateSalve(float fDebut, float fFin)
+    //BUT : Créer une salve pour invoquer les moutons.
+    //ENTREE : Le moment de début de la salve et celui de la fin.
+    //SORTIE : Une salve comprenant le début et la fin.
     {
         salve Salve;
         Salve.fDebut = fDebut;
