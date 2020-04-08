@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour
 {
@@ -13,37 +14,43 @@ public class GameManager : MonoBehaviour
     public Text timeValue;
     private float fTempo = 0.45f;
 
+    struct salve
+    {
+        public float fFin;
+        public float fDebut;
+    };
+
+    List<salve> Timing = new List<salve>();
+
     // Start is called before the first frame update
     void Start()
     {
-        InvokeRepeating("IncrementTableauMouton", start, 0.2f);
-        InvokeRepeating("InitMouton", start, 2.0f);
+        InvokeRepeating("IncrementTableauMouton", start, fTempo/2);
+        //InvokeRepeating("InitMouton", start, 2.0f);
+        MappingNiveau1();
+
     }
 
     void Update()
     {
         displayValueTimer();
-        switch (timer)
+        if (Timing.Count != 0)
         {
-            case float fX when (fX >= 2.1f && fX<3.8f):
+            if (timer >= (Timing[0].fDebut-4 * (fTempo/2)))
+            {
                 InvokeMouton();
-                break;
-            case float fX when (fX >= 3.8 && fX < 5.7):
+            }
+            if(timer >= (Timing[0].fFin - 4 * (fTempo / 2)))
+            {
                 RevokeMouton();
-                break;
-            case float fX when (fX >= 5.8f && fX < 7.6f):
-                if (!IsInvoking("InitMouton"))
-                {
-                    InvokeRepeating("InitMouton", start, fTempo);
-                }
-                break;
-            //case float fX when (fX >= 7.6f && fX <12.8f)
-
-
-
-            /*case default:
-                break;*/
+                Timing.Remove(Timing[0]);
+            }
         }
+        else
+        {
+            Debug.Log("La Liste est vide.");
+        }
+        
     }
 
     private void FixedUpdate()
@@ -148,5 +155,32 @@ public class GameManager : MonoBehaviour
         {
             CancelInvoke("InitMouton");
         }
+    }
+
+    void MappingNiveau1()
+    {
+        Timing.Add(CreateSalve(2.1f, 4.0f));
+        Timing.Add(CreateSalve(5.8f, 7.8f));
+        Timing.Add(CreateSalve(9.2f, 11.0f));
+        Timing.Add(CreateSalve(12.9f, 14.5f));
+        Timing.Add(CreateSalve(16.1f, 18.2f));
+        Timing.Add(CreateSalve(19.9f, 21.9f));
+        Timing.Add(CreateSalve(23.3f, 25.2f));
+        Timing.Add(CreateSalve(30.4f, 33.3f));
+        Timing.Add(CreateSalve(33.7f, 37.0f));
+        Timing.Add(CreateSalve(37.3f, 40.1f));
+        Timing.Add(CreateSalve(40.9f, 44.3f));
+        Timing.Add(CreateSalve(44.5f, 46.1f));
+        Timing.Add(CreateSalve(46.2f, 47.5f));
+        Timing.Add(CreateSalve(47.9f, 51.1f));
+        Timing.Add(CreateSalve(51.4f, 54.8f));
+    }
+
+    salve CreateSalve(float fDebut, float fFin)
+    {
+        salve Salve;
+        Salve.fDebut = fDebut;
+        Salve.fFin = fFin;
+        return Salve;
     }
 }
