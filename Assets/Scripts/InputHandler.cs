@@ -6,6 +6,8 @@ public class InputHandler : MonoBehaviour
     public Text scoreValue;
     public Image pressButton;
     float score;
+    public GameObject successAnim;
+    public GameObject failedAnim;
     [HideInInspector]public bool clicked = false;
 
 
@@ -46,14 +48,27 @@ public class InputHandler : MonoBehaviour
             {
                 score++;
                 clicked = true;
+                successAnim.SetActive(true);
             }
         }
 
-        //Lorsque le timing est passé, on augmente l'index pour passer au prochain timing
+        if ((GameObject.Find("GameManager").GetComponent<GameManager>().echecMouton.GetComponent<SpriteRenderer>().color == Color.black) && (!clicked))
+        {
+            failedAnim.SetActive(true);
+        } else
+        {
+            failedAnim.SetActive(false);
+        }
+            //Lorsque le timing est passé, on augmente l'index pour passer au prochain timing
 
         if ((GameObject.Find("GameManager").GetComponent<GameManager>().tMoutons[3].GetComponent<SpriteRenderer>().color == Color.white))
         {
             clicked = false;
+            
+        }
+
+        if ((GameObject.Find("GameManager").GetComponent<GameManager>().tMoutons[2].GetComponent<SpriteRenderer>().color == Color.black)) {
+            successAnim.SetActive(false);
         }
 
 
