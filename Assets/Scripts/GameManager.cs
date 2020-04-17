@@ -185,6 +185,7 @@ public class GameManager : MonoBehaviour
         Timing.Add(CreateSalve(46.2f, 47.5f));
         Timing.Add(CreateSalve(47.9f, 51.1f));
         Timing.Add(CreateSalve(51.4f, 54.8f));
+        Timing.Add(CreateSalve(55.0f, 58.4f));
     }
 
     salve CreateSalve(float fDebut, float fFin)
